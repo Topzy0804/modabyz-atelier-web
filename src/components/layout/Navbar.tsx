@@ -51,12 +51,19 @@ const Navbar = () => {
           ))}
         </nav>
 
-        <Link
-          to="/contact"
-          className="hidden lg:inline-flex items-center px-6 py-3 bg-primary text-primary-foreground text-xs uppercase tracking-[0.2em] hover:bg-gold transition-colors"
-        >
-          Book a Fitting
-        </Link>
+        <div className="hidden lg:flex items-center gap-4">
+          {isAdmin && (
+            <Link to="/admin" className="text-xs uppercase tracking-[0.2em] text-accent link-underline">
+              Admin
+            </Link>
+          )}
+          <Link
+            to="/contact"
+            className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground text-xs uppercase tracking-[0.2em] hover:bg-gold transition-colors"
+          >
+            Book a Fitting
+          </Link>
+        </div>
 
         <button
           className="lg:hidden p-2 text-primary"
