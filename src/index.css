@@ -112,4 +112,8 @@
   .link-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all hover:after:w-full;
   }
+
+  .input {
+    @apply w-full px-4 py-3 bg-background border border-border focus:border-gold focus:outline-none text-sm;
+  }
 }
