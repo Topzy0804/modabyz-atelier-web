@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import ProductCard from "@/components/ProductCard";
-import { products } from "@/data/site";
+import { useProducts } from "@/hooks/useContent";
 import { cn } from "@/lib/utils";
 
 const Products = () => {
-  const categories = useMemo(() => ["All", ...Array.from(new Set(products.map((p) => p.category)))], []);
+  const { data: products = [], isLoading } = useProducts();
   const [active, setActive] = useState("All");
+  const categories = useMemo(() => ["All", ...Array.from(new Set(products.map((p) => p.category)))], [products]);
   const filtered = active === "All" ? products : products.filter((p) => p.category === active);
 
   return (
@@ -32,9 +33,13 @@ const Products = () => {
             ))}
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
+          {isLoading ? (
+            <p className="text-center text-muted-foreground">Loading collection…</p>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
+            </div>
+          )}
         </div>
       </section>
     </>

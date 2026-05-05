@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, MessageCircle, Truck, Shield, Sparkles } from "lucide-react";
-import { products } from "@/data/site";
+import { useProducts } from "@/hooks/useContent";
 import { contact } from "@/data/site";
 import ProductCard from "@/components/ProductCard";
 import { cn } from "@/lib/utils";
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === id);
-  const [size, setSize] = useState(product?.sizes[0] ?? "");
+  const { slug } = useParams();
+  const { data: products = [], isLoading } = useProducts();
+  const product = products.find((p) => p.slug === slug);
+  const [size, setSize] = useState("");
+
+  if (isLoading) return <div className="container-luxe py-32 text-center text-muted-foreground">Loading…</div>;
 
   if (!product) {
     return (
@@ -20,8 +23,9 @@ const ProductDetail = () => {
     );
   }
 
+  const activeSize = size || product.sizes[0] || "";
   const related = products.filter((p) => p.id !== product.id).slice(0, 4);
-  const waMessage = encodeURIComponent(`Hello MODA By Z, I'd like to order: ${product.name} (${size}) — ${product.price}`);
+  const waMessage = encodeURIComponent(`Hello MODA By Z, I'd like to order: ${product.name}${activeSize ? ` (${activeSize})` : ""} — ${product.price}`);
 
   return (
     <>
@@ -32,15 +36,8 @@ const ProductDetail = () => {
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            <div className="grid grid-cols-4 gap-3">
-              <div className="col-span-4 aspect-[4/5] overflow-hidden bg-secondary">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-              </div>
-              {[product.image, product.image, product.image, product.image].map((img, i) => (
-                <div key={i} className="aspect-square bg-secondary overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
-                  <img src={img} alt="" loading="lazy" className="w-full h-full object-cover" />
-                </div>
-              ))}
+            <div className="aspect-[4/5] overflow-hidden bg-secondary">
+              {product.image_url && <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />}
             </div>
 
             <div>
@@ -49,23 +46,25 @@ const ProductDetail = () => {
               <p className="font-serif text-3xl text-accent mb-8">{product.price}</p>
               <p className="text-muted-foreground leading-relaxed mb-10">{product.details}</p>
 
-              <div className="mb-8">
-                <p className="eyebrow mb-4">Select Size</p>
-                <div className="flex flex-wrap gap-2">
-                  {product.sizes.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setSize(s)}
-                      className={cn(
-                        "px-5 py-3 text-xs uppercase tracking-[0.2em] border transition-colors",
-                        size === s ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-gold"
-                      )}
-                    >
-                      {s}
-                    </button>
-                  ))}
+              {product.sizes.length > 0 && (
+                <div className="mb-8">
+                  <p className="eyebrow mb-4">Select Size</p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.sizes.map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => setSize(s)}
+                        className={cn(
+                          "px-5 py-3 text-xs uppercase tracking-[0.2em] border transition-colors",
+                          activeSize === s ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-gold"
+                        )}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <a
                 href={`https://wa.me/${contact.whatsapp}?text=${waMessage}`}
@@ -93,14 +92,16 @@ const ProductDetail = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-secondary/40">
-        <div className="container-luxe">
-          <h2 className="heading-section text-center mb-12">You may also love</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {related.map((p) => <ProductCard key={p.id} product={p} />)}
+      {related.length > 0 && (
+        <section className="py-24 bg-secondary/40">
+          <div className="container-luxe">
+            <h2 className="heading-section text-center mb-12">You may also love</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {related.map((p) => <ProductCard key={p.id} product={p} />)}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 };

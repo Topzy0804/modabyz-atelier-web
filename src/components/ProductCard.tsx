@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import type { Product } from "@/data/site";
+import type { DBProduct } from "@/hooks/useContent";
 
-const ProductCard = ({ product }: { product: Product }) => (
-  <Link to={`/products/${product.id}`} className="group block">
+const ProductCard = ({ product }: { product: DBProduct }) => (
+  <Link to={`/products/${product.slug}`} className="group block">
     <div className="relative overflow-hidden bg-secondary aspect-[4/5]">
-      <img
-        src={product.image}
-        alt={product.name}
-        loading="lazy"
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-      />
+      {product.image_url && (
+        <img
+          src={product.image_url}
+          alt={product.name}
+          loading="lazy"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        />
+      )}
       <div className="absolute top-4 left-4 px-3 py-1 bg-background/90 text-[10px] uppercase tracking-[0.2em]">
         {product.category}
       </div>
