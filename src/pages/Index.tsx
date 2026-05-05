@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Scissors, Sparkles, ShoppingBag, Palette, Award, Heart, Gem, Eye } from "lucide-react";
+import * as Icons from "lucide-react";
+import { ArrowRight, Sparkles, Award, Heart, Gem, Eye } from "lucide-react";
 import Hero from "@/components/Hero";
 import SectionHeader from "@/components/SectionHeader";
 import ProductCard from "@/components/ProductCard";
-import { products, services } from "@/data/site";
+import { useProducts, useServices } from "@/hooks/useContent";
 import aboutImg from "@/assets/about.jpg";
-
-const iconMap = { Scissors, Sparkles, ShoppingBag, Palette } as const;
 
 const whyUs = [
   { icon: Award, title: "Quality Craftsmanship", text: "Every seam is hand-finished by master tailors." },
@@ -15,7 +14,12 @@ const whyUs = [
   { icon: Eye, title: "Attention to Detail", text: "From the chosen thread to the final stitch." },
 ];
 
-const Index = () => (
+const Index = () => {
+  const { data: products = [] } = useProducts();
+  const { data: services = [] } = useServices();
+  const featured = products.filter((p) => p.featured).slice(0, 4);
+  const showProducts = featured.length ? featured : products.slice(0, 4);
+  return (
   <>
     <Hero />
 
