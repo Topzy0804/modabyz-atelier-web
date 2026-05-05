@@ -58,8 +58,8 @@ const Index = () => {
           description="From bespoke commissions to ready-to-wear, every service begins with a conversation about you."
         />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-          {services.map((s, i) => {
-            const Icon = iconMap[s.icon as keyof typeof iconMap] ?? Scissors;
+          {services.map((s) => {
+            const Icon = (Icons as any)[s.icon] ?? Sparkles;
             return (
               <div key={i} className="group p-8 bg-background border border-border hover:border-gold transition-all duration-500 hover:shadow-elegant">
                 <div className="w-14 h-14 mb-6 grid place-items-center bg-accent-soft text-accent group-hover:bg-gold group-hover:text-accent-foreground transition-colors">
