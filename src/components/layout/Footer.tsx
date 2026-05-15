@@ -11,7 +11,7 @@ const Footer = () => (
           <span className="font-serif text-sm italic text-gold tracking-[0.2em]">by Z</span>
         </div>
         <p className="text-sm text-primary-foreground/70 leading-relaxed">
-          A Lagos atelier crafting modest, modern garments — abayas, kaftans and bespoke tailoring made to last.
+          Beautiful, modern modest wear tailored in Lagos. We create premium abayas, kaftans, and custom designs made just for you.
         </p>
         <div className="flex gap-4 mt-6">
           {[Instagram, Facebook, Twitter].map((Icon, i) => (
@@ -39,7 +39,7 @@ const Footer = () => (
       </div>
 
       <div>
-        <h4 className="eyebrow mb-6 text-gold">Atelier</h4>
+        <h4 className="eyebrow mb-6 text-gold">Fashion House</h4>
         <ul className="space-y-4 text-sm text-primary-foreground/80">
           <li className="flex gap-3"><MapPin className="w-4 h-4 mt-0.5 text-gold shrink-0" /> {contact.address}</li>
           <li className="flex gap-3"><Phone className="w-4 h-4 mt-0.5 text-gold shrink-0" /> {contact.phone}</li>

@@ -3,6 +3,7 @@ import TopBar from "./TopBar";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import WhatsAppFloat from "./WhatsAppFloat";
+import ArrowUpFloat from "./ArrowUp";
 
 const Layout = () => (
   <div className="min-h-screen flex flex-col">
@@ -13,6 +14,7 @@ const Layout = () => (
     </main>
     <Footer />
     <WhatsAppFloat />
+    <ArrowUpFloat />
   </div>
 );
 

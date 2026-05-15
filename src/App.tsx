@@ -18,6 +18,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminServices from "./pages/admin/AdminServices";
 import AdminPosts from "./pages/admin/AdminPosts";
+import BlogDetails from "./pages/BlogDetails";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/products" element={<Products />} />
               <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogDetails />} />
               <Route path="/contact" element={<Contact />} />
             </Route>
             <Route path="/auth" element={<Auth />} />
