@@ -13,7 +13,7 @@ const Blog = () => {
       <section className="py-24">
         <div className="container-luxe">
           {isLoading ? (
-            <p className="text-center text-muted-foreground">Loading…</p>
+            <p className="text-center text-muted-foreground">Loading</p>
           ) : (
             <div className="grid lg:grid-cols-3 gap-10">
               {posts.length === 0 ? (
