@@ -2,6 +2,7 @@ import { MapPin, Phone, Mail, MessageCircle, Instagram, Facebook, Twitter } from
 import PageHeader from "@/components/PageHeader";
 import { contact } from "@/data/site";
 import { toast } from "sonner";
+import { Helmet } from "react-helmet-async";
 
 const Contact = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -12,6 +13,11 @@ const Contact = () => {
 
   return (
     <>
+    <Helmet>
+      <title>Contact - MODA By Z</title>
+      <meta name="description"
+      content="Get in touch with the MODA By Z atelier. Book a fitting, request a bespoke piece, or simply come say hello." />
+    </Helmet>
       <PageHeader eyebrow="Contact" title="Visit the atelier" description="Book a fitting, request a bespoke piece, or simply come say hello." />
 
       <section className="py-24">
@@ -35,7 +41,7 @@ const Contact = () => {
               <p className="eyebrow mb-3">WhatsApp</p>
               <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="flex gap-4 hover:text-accent transition-colors">
                 <MessageCircle className="w-5 h-5 text-gold mt-1 shrink-0" />
-                <span>{contact.phone}</span>
+                <span>{contact.whatsapp}</span>
               </a>
             </div>
             <div>

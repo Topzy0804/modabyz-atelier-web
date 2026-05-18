@@ -4,6 +4,8 @@ import ProductCard from "@/components/ProductCard";
 import { useProducts } from "@/hooks/useContent";
 import { cn } from "@/lib/utils";
 
+import { Helmet } from "react-helmet-async";
+
 const Products = () => {
   const { data: products = [], isLoading } = useProducts();
   const [active, setActive] = useState("All");
@@ -12,6 +14,12 @@ const Products = () => {
 
   return (
     <>
+    <Helmet>
+      <title>Products - MODA By Z</title>
+      <meta name="description"
+      content="Shop the collection of abayas, kaftans, ready-to-wear and bespoke commissions." />
+    </Helmet>
+    
       <PageHeader eyebrow="The Collection" title="Shop the atelier" description="A curated edit of abayas, kaftans, ready-to-wear and bespoke commissions." />
 
       <section className="py-16 md:py-24">

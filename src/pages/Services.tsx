@@ -4,12 +4,20 @@ import { ArrowRight } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import { useServices } from "@/hooks/useContent";
 
+import { Helmet } from "react-helmet-async";
+
 const Services = () => {
   const { data: services = [], isLoading } = useServices();
 
   return (
     <>
-      <PageHeader eyebrow="Services" title="Tailored to your every occasion" description="From a single fitting to an entire bridal trousseau — discover the full breadth of the MODA By Z atelier." />
+    <Helmet>
+      <title>Services - MODA By Z</title>
+      <meta name="description"
+      content="From a single fitting to an entire bridal trousseau — discover the full breadth of the MODA By Z atelier." />
+    </Helmet>
+    
+    <PageHeader eyebrow="Services" title="Tailored to your every occasion" description="From a single fitting to an entire bridal trousseau — discover the full breadth of the MODA By Z atelier." />
 
       <section className="py-24 md:py-32">
         <div className="container-luxe grid md:grid-cols-2 gap-8">

@@ -6,6 +6,8 @@ import { contact } from "@/data/site";
 import ProductCard from "@/components/ProductCard";
 import { cn } from "@/lib/utils";
 
+import { Helmet } from "react-helmet-async";
+
 const ProductDetail = () => {
   const { slug } = useParams();
   const { data: products = [], isLoading } = useProducts();
@@ -16,10 +18,20 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="container-luxe py-32 text-center">
-        <h1 className="heading-section mb-4">Product not found</h1>
-        <Link to="/products" className="text-accent link-underline">Back to collection</Link>
-      </div>
+      <>
+        <Helmet>
+          <title>Product.slug - MODA By Z</title>
+          <meta
+            name="description"
+            content={product?.description || "Discover the full breadth of the MODA By Z atelier."}
+          />
+        </Helmet>
+
+        <div className="container-luxe py-32 text-center">
+          <h1 className="heading-section mb-4">Product not found</h1>
+          <Link to="/products" className="text-accent link-underline">Back to collection</Link>
+        </div>
+      </>
     );
   }
 
