@@ -3,12 +3,20 @@ import { usePosts } from "@/hooks/useContent";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { Helmet } from "react-helmet-async";
+
 const Blog = () => {
   const { data: posts = [], isLoading } = usePosts();
 
   return (
     <>
-      <PageHeader eyebrow="Journal" title="Stories from the atelier" description="Notes on craft, fabric, fittings and the women who wear MODA By Z." />
+    <Helmet>
+      <title>Blog - MODA By Z</title>
+      <meta name="description" 
+      content="Blogs on craft, fabric, fashion and lifestyle." />
+    </Helmet>
+    
+    <PageHeader eyebrow="Journal" title="Stories from the atelier" description="Notes on craft, fabric, fittings and the women who wear MODA By Z." />
 
       <section className="py-24">
         <div className="container-luxe">
