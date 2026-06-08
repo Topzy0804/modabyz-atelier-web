@@ -10,6 +10,7 @@ const Auth = () => {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -21,18 +22,25 @@ const Auth = () => {
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
         if (error) throw error;
-        toast.success("Account created. You're signed in.");
+        // If a session is returned the user is signed in, otherwise an email
+        // confirmation flow is required (no session).
+        if (data?.session) {
+          toast.success("Account created. You're signed in.");
+          nav("/admin", { replace: true });
+        } else {
+          toast.success("Account created. Check your email to confirm your account.");
+        }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        if (data?.session) nav("/admin", { replace: true });
       }
-      nav("/admin", { replace: true });
     } catch (err: any) {
       toast.error(err.message ?? "Authentication failed");
     } finally {
@@ -46,6 +54,16 @@ const Auth = () => {
         <p className="eyebrow mb-3">Atelier Admin</p>
         <h1 className="font-serif text-3xl mb-8">{mode === "signin" ? "Sign in" : "Create account"}</h1>
         <form onSubmit={submit} className="space-y-4">
+          {mode === "signup" && (
+            <input
+              type="text"
+              required
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 bg-background border border-border focus:border-gold focus:outline-none text-sm"
+            />
+          )}
           <input
             type="email"
             required
@@ -72,8 +90,10 @@ const Auth = () => {
           </button>
         </form>
         <button
+          type="button"
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="mt-6 text-xs uppercase tracking-[0.2em] text-accent link-underline"
+          disabled={busy}
+          className="mt-6 text-xs uppercase tracking-[0.2em] text-accent link-underline disabled:opacity-50"
         >
           {mode === "signin" ? "Need an account? Sign up" : "Have an account? Sign in"}
         </button>
